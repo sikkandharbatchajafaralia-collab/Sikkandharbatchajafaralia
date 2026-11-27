@@ -1,0 +1,35 @@
+seed: 42
+paths:
+  output_dir: ./outputs/utris_net
+  train_manifest: ./manifests/dota.csv
+  external_manifest: ./manifests/dada.csv
+  detector_weights: yolov8n.pt
+data:
+  image_size: 224
+  clip_length: 16
+  stride: 8
+  batch_size: 4
+  num_workers: 4
+model:
+  hidden_dim: 256
+  attention_heads: 8
+  graph_layers: 3
+  max_nodes: 32
+  edge_threshold: 0.50
+  num_event_classes: 13
+  dropout: 0.20
+  pretrained: false # set true only when ImageNet weights are already cached or network access is available
+train:
+  epochs: 100
+  patience: 12
+  learning_rate: 0.0001
+  weight_decay: 0.0001
+  lambda_event: 1.0
+  lambda_class: 1.0
+  lambda_severity: 0.5
+  lambda_calibration: 0.1
+  lambda_trend: 0.25
+  seeds: [17, 29, 42, 71, 101]
+alerts:
+  thresholds: [0.25, 0.50, 0.75]
+  max_uncertainty_for_emergency: 0.25
